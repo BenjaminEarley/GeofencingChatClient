@@ -13,15 +13,20 @@
     tools:context="com.benjaminearley.hackproject.ProfileActivityFragment"
     tools:showIn="@layout/activity_profile">
 
-
-    <ImageView
-        android:id="@+id/profile_image"
+    <FrameLayout
+        android:id="@+id/profile_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:transitionName="profile"
-        app:srcCompat="@drawable/ic_account_circle_white_256dp"
-        tools:ignore="MissingPrefix" />
+        android:transitionName="profile">
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            app:srcCompat="@drawable/ic_account_circle_white_256dp"
+            tools:ignore="MissingPrefix" />
+    </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
