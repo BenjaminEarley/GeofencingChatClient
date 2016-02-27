@@ -41,7 +41,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "bearley@outsitenetworks.com", "bar@example.com:world"
+            "bearley@outsitenetworks.com:iluvbread", "bar@example.com:world"
     };
 
     /**
