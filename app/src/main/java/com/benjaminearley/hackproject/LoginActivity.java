@@ -197,5 +197,9 @@ public class LoginActivity extends AppCompatActivity {
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
+    public void onNeedRegistrationClick(View view) {
+
+    }
 }
 
