@@ -102,6 +102,10 @@ public class LoginActivity extends AppCompatActivity {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+        } else if (!isEmailSchoolApproved(email)) {
+            mEmailView.setError(getString(R.string.error_not_edu_email));
+            focusView = mEmailView;
+            cancel = true;
         }
 
         if (cancel) {
@@ -112,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+
             App.getFirebaseRef().authWithPassword(email, password, new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
@@ -149,6 +154,10 @@ public class LoginActivity extends AppCompatActivity {
             mEmailView.setError(getString(R.string.error_invalid_account));
             mEmailView.requestFocus();
         }
+    }
+
+    private boolean isEmailSchoolApproved(String email) {
+        return email.contains(".edu");
     }
 
     private boolean isEmailValid(String email) {
