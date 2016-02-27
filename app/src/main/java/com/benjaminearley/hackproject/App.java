@@ -11,19 +11,19 @@ public class App extends Application {
 
     private static Firebase firebase;
 
+    public static Firebase getFirebaseRef() {
+        if (firebase == null) {
+            firebase = new Firebase("https://odu-hackathon.firebaseio.com/");
+        }
+        return firebase;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         Firebase.setAndroidContext(this);
 
         // Don't do this! This is just so cold launches take some time
-        SystemClock.sleep(TimeUnit.SECONDS.toMillis(2));
-    }
-
-    public static Firebase getFirebaseRef() {
-        if (firebase == null) {
-            firebase = new Firebase("https://odu-hackathon.firebaseio.com/");
-        }
-        return firebase;
+        SystemClock.sleep(TimeUnit.SECONDS.toMillis(1));
     }
 }

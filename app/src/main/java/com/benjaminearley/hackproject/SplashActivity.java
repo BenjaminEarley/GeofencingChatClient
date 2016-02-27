@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class SplashActivity extends AppCompatActivity {
@@ -14,16 +16,23 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            startLoginActivity();
+        if (SharedPreferencesUtil.isLoggedIn(this)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(0, R.anim.fade_out);
         } else {
-            if(checkSelfPermission(ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 startLoginActivity();
             } else {
-                Intent intent = new Intent(this, PermissionActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, R.anim.fade_out);
+                if (checkSelfPermission(ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    startLoginActivity();
+                } else {
+                    Intent intent = new Intent(this, PermissionActivity.class);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(0, R.anim.fade_out);
+                }
             }
         }
     }
