@@ -57,7 +57,7 @@ public class ProfileActivityFragment extends Fragment {
                     mCamera = getCameraInstance();
 
                     // Create our Preview view and set it as the content of our activity.
-                    CameraPreview mPreview = new CameraPreview(getContext(), mCamera);
+                    CameraPreview mPreview = new CameraPreview(getContext(), getActivity(), mCamera);
                     FrameLayout preview = (FrameLayout) profile_image_button;
                     preview.addView(mPreview);
 
@@ -168,13 +168,20 @@ public class ProfileActivityFragment extends Fragment {
     }
 
     public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
+        int cameraCount = 0;
+        Camera cam = null;
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        cameraCount = Camera.getNumberOfCameras();
+        for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
+            Camera.getCameraInfo(camIdx, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                try {
+                    cam = Camera.open(camIdx);
+                } catch (RuntimeException e) {
+                    Log.e("CAM", "Camera failed to open: " + e.getLocalizedMessage());
+                }
+            }
         }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
+        return cam;
     }
 }
