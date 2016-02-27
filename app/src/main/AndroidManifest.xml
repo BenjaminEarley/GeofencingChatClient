@@ -31,7 +31,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"/>
+            android:label="@string/title_activity_login" />
+
+        <service
+            android:name=".GeofenceCallbackService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
