@@ -18,6 +18,7 @@ public class PermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission);
+
         if (mayRequestLocation()) {
             Intent intent = new Intent(this, PermissionActivity.class);
             startActivity(intent);
@@ -46,7 +47,7 @@ public class PermissionActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_LOCATION_SERVICES) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(0, R.anim.fade_out);
