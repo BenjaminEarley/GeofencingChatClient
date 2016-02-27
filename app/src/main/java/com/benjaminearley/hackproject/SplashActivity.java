@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -17,10 +20,22 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (SharedPreferencesUtil.isLoggedIn(this)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-            overridePendingTransition(0, R.anim.fade_out);
+
+            App.getFirebaseRef().authWithPassword(SharedPreferencesUtil.getUserEmail(this), SharedPreferencesUtil.getUserPassword(this), new Firebase.AuthResultHandler() {
+                @Override
+                public void onAuthenticated(AuthData authData) {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(0, R.anim.fade_out);
+                }
+
+                @Override
+                public void onAuthenticationError(FirebaseError firebaseError) {
+                    startLoginActivity();
+                }
+            });
+
         } else {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 startLoginActivity();
