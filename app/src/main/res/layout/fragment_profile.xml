@@ -28,13 +28,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:paddingTop="24dp">
+        android:paddingTop="32dp">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:hintTextAppearance="@android:style/TextAppearance.Material.Headline">
+            android:paddingRight="12dp"
+            android:theme="@style/ProfileText"
+            app:hintTextAppearance="@style/TextLabel">
 
             <EditText
                 android:id="@+id/firstName"
@@ -44,7 +46,8 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPersonName"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="#fff" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -52,7 +55,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:hintTextAppearance="@android:style/TextAppearance.Material.Headline">
+            android:theme="@style/ProfileText"
+            app:hintTextAppearance="@style/TextLabel">
 
             <EditText
                 android:id="@+id/lastName"
@@ -62,7 +66,8 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPersonName"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="#fff" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -78,7 +83,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:hintTextAppearance="@android:style/TextAppearance.Material.Headline">
+            android:paddingRight="12dp"
+            android:theme="@style/ProfileText"
+            app:hintTextAppearance="@style/TextLabel">
 
             <EditText
                 android:id="@+id/Age"
@@ -88,7 +95,8 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="numberSigned"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="#fff" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -96,7 +104,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:hintTextAppearance="@android:style/TextAppearance.Material.Headline">
+            android:theme="@style/ProfileText"
+            app:hintTextAppearance="@style/TextLabel">
 
             <EditText
                 android:id="@+id/Gender"
@@ -106,7 +115,8 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textCapCharacters"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="#fff" />
 
         </android.support.design.widget.TextInputLayout>
 
