@@ -7,9 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 
-/**
- * Created by bearley on 2/27/16.
- */
 public class Utils {
 
     public static Drawable makeCircleAvatar(Bitmap bmp) {
