@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 import com.firebase.ui.FirebaseListAdapter;
 
 /**
@@ -21,6 +22,13 @@ public class MainActivityFragment extends Fragment {
     private FirebaseListAdapter<ChatMessage> mListAdapter;
     private EditText textEdit;
     private Button sendButton;
+
+    private ChatMessage chatMessage;
+
+    private String firstName;
+    private String lastName;
+    private String age;
+    private String gender;
 
     public MainActivityFragment() {
     }
@@ -38,9 +46,12 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String text = textEdit.getText().toString();
-                ChatMessage message = new ChatMessage(text);
-                App.getFirebaseRef().push().setValue(message);
-                textEdit.setText("");
+                if (!text.isEmpty()) {
+                    chatMessage.setMessage(text);
+                    App.getFirebaseRef().push().setValue(chatMessage);
+                    textEdit.setText("");
+                    chatMessage.setMessage("");
+                }
             }
         });
 
@@ -55,7 +66,20 @@ public class MainActivityFragment extends Fragment {
 
         listView.setAdapter(mListAdapter);
 
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        firstName = SharedPreferencesUtil.getFirstName(getActivity());
+        lastName = SharedPreferencesUtil.getLastName(getActivity());
+        age = SharedPreferencesUtil.getAge(getActivity());
+        gender = SharedPreferencesUtil.getGender(getActivity());
+
+        chatMessage = new ChatMessage("", firstName, lastName, age, gender, "");
+
+
     }
 }
