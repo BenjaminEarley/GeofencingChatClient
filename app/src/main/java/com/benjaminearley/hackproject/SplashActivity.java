@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
-                    overridePendingTransition(0, R.anim.fade_out);
+                    SplashActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
 
                 @Override
@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, PermissionActivity.class);
                     startActivity(intent);
                     finish();
-                    overridePendingTransition(0, R.anim.fade_out);
+                    SplashActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
             }
         }
@@ -56,6 +56,6 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
-        overridePendingTransition(0, R.anim.fade_out);
+        SplashActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

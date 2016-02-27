@@ -146,7 +146,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-            overridePendingTransition(0, R.anim.fade_out);
         } else if (wrongPassword){
             mPasswordView.setError(getString(R.string.error_incorrect_password));
             mPasswordView.requestFocus();
@@ -199,7 +198,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onNeedRegistrationClick(View view) {
-
     }
 }
 

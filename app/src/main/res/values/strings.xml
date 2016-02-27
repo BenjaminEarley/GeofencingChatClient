@@ -20,4 +20,6 @@
     <string name="pref_login">login</string>
     <string name="error_not_edu_email">Not a valid school email</string>
     <string name="need_account">Need an Account?</string>
+    <string name="action_profile">profile</string>
+    <string name="title_activity_profile">Profile</string>
 </resources>

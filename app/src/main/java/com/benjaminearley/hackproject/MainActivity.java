@@ -87,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_profile) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+            MainActivity.this.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         }
 
