@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,18 +46,30 @@ public class ProfileActivityFragment extends Fragment {
                     .inflateTransition(R.transition.curve));
         }
 
-        if ( mayCaptureFromCamera() ) {
-            Camera mCamera;
-            // Create an instance of Camera
-            mCamera = getCameraInstance();
 
-            // Create our Preview view and set it as the content of our activity.
-            CameraPreview mPreview = new CameraPreview(getContext(), mCamera);
-            FrameLayout preview = (FrameLayout) getActivity().findViewById(R.id.profile_image_button);
-            if ( preview != null ) {
-                preview.addView(mPreview);
+        final FrameLayout profile_image_button = (FrameLayout) view.findViewById(R.id.profile_image_button);
+        profile_image_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if ( mayCaptureFromCamera() ) {
+                    Camera mCamera;
+                    // Create an instance of Camera
+                    mCamera = getCameraInstance();
+
+                    // Create our Preview view and set it as the content of our activity.
+                    CameraPreview mPreview = new CameraPreview(getContext(), mCamera);
+                    FrameLayout preview = (FrameLayout) profile_image_button;
+                    preview.addView(mPreview);
+
+                }
+
+                Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera) {}
+                };
             }
-        }
+        });
+
 
         firstNameText = (EditText) view.findViewById(R.id.firstName);
         lastNameText = (EditText) view.findViewById(R.id.lastName);
