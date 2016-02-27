@@ -3,10 +3,12 @@ package com.benjaminearley.hackproject;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -18,6 +20,11 @@ public class PermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.colorAccent));
+        }
 
         if (mayRequestLocation()) {
             Intent intent = new Intent(this, PermissionActivity.class);
