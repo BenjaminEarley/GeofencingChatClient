@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGray"
     tools:context="com.benjaminearley.hackproject.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
@@ -10,8 +11,15 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/footer"
+        android:layout_above="@+id/line"
         android:transcriptMode="alwaysScroll" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/footer"
+        android:background="#EEEEEE" />
 
 
     <LinearLayout
@@ -19,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="12dp"
+        android:background="@android:color/white"
         android:gravity="bottom"
         android:orientation="horizontal">
 
@@ -27,16 +35,21 @@
             android:id="@+id/text_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="12dp"
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:singleLine="true" />
 
         <ImageButton
             android:id="@+id/send_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="12dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/circle_button"
             android:contentDescription="@string/send"
+            android:elevation="3dp"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_send_white_24dp"
             tools:ignore="MissingPrefix" />
