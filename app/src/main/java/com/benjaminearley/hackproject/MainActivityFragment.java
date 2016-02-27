@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +21,7 @@ public class MainActivityFragment extends Fragment {
     private ListView listView;
     private FirebaseListAdapter<ChatMessage> mListAdapter;
     private EditText textEdit;
-    private Button sendButton;
+    private ImageButton sendButton;
 
     private ChatMessage chatMessage;
 
@@ -40,7 +40,7 @@ public class MainActivityFragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.list);
         textEdit = (EditText) view.findViewById(R.id.text_edit);
-        sendButton = (Button) view.findViewById(R.id.send_button);
+        sendButton = (ImageButton) view.findViewById(R.id.send_button);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
