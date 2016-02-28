@@ -25,6 +25,7 @@ import static android.Manifest.permission.CAMERA;
  */
 public class ProfileActivityFragment extends Fragment {
 
+    private static final int REQUEST_CAMERA = 0;
     private EditText firstNameText;
     private EditText lastNameText;
     private EditText ageText;
