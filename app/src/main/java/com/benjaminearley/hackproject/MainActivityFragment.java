@@ -76,9 +76,9 @@ public class MainActivityFragment extends Fragment {
 
                     view.findViewById(R.id.chat_left).setVisibility(View.VISIBLE);
 
-                    ((TextView) view.findViewById(R.id.text1_right)).setText(chatMessage.getMessage());
+                    ((TextView) view.findViewById(R.id.text1_left)).setText(chatMessage.getMessage());
 
-                    view.findViewById(R.id.profile_icon_right).setOnClickListener(new View.OnClickListener() {
+                    view.findViewById(R.id.profile_icon_left).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
