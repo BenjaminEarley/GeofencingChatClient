@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
+
 public class ProfileActivity extends AppCompatActivity {
 
     @Override
@@ -34,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
                 break;
             case R.id.action_logout:
                 App.getFirebaseRef().unauth();
+                SharedPreferencesUtil.setisLogin(this, false);
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

@@ -79,4 +79,11 @@ public class SharedPreferencesUtil {
         spe.putBoolean(c.getString(R.string.pref_login), true);
         spe.apply();
     }
+
+    public static void setisLogin(Context c, boolean isLoggined) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putBoolean(c.getString(R.string.pref_login), isLoggined);
+        spe.apply();
+    }
 }
