@@ -68,6 +68,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.benjaminearley.hackproject.MainActivity" />
         </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register" />
     </application>
 
 </manifest>
