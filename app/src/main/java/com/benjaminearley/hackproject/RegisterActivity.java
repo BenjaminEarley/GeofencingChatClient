@@ -2,6 +2,8 @@ package com.benjaminearley.hackproject;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,12 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+
+import static android.widget.Toast.makeText;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -33,7 +39,15 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordView = (EditText) findViewById(R.id.password);
 
         mLoginFormView = findViewById(R.id.register_form);
-        mProgressView = findViewById(R.id.login_progress);
+        mProgressView = findViewById(R.id.register_progress);
+
+        Button register_submit_button = (Button) findViewById(R.id.registration_submit_button);
+        register_submit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptRegister();
+            }
+        });
     }
 
 
@@ -84,23 +98,38 @@ public class RegisterActivity extends AppCompatActivity {
             // perform the user login attempt.
             showProgress(true);
 
-            App.getFirebaseRef().authWithPassword(email, password, new Firebase.AuthResultHandler() {
+            App.getFirebaseRef().createUser(email, password, new Firebase.ResultHandler() {
                 @Override
-                public void onAuthenticated(AuthData authData) {
-                    SharedPreferencesUtil.setUserLogin(RegisterActivity.this, email, password);
-                    onAuthentication(true, true);
+                public void onSuccess() {
+                    App.getFirebaseRef().authWithPassword(email, password, new Firebase.AuthResultHandler() {
+                        @Override
+                        public void onAuthenticated(AuthData authData) {
+                            SharedPreferencesUtil.setUserLogin(RegisterActivity.this, email, password);
+                            onAuthentication(true, true);
+                        }
+
+                        @Override
+                        public void onAuthenticationError(FirebaseError firebaseError) {
+
+                            boolean wrongPassword = false;
+
+                            if (firebaseError.getCode() == FirebaseError.INVALID_PASSWORD) {
+                                wrongPassword = true;
+                            }
+
+                            onAuthentication(false, wrongPassword);
+                        }
+                    });
                 }
 
                 @Override
-                public void onAuthenticationError(FirebaseError firebaseError) {
+                public void onError(FirebaseError firebaseError) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Error Registering!";
+                    int duration = Toast.LENGTH_SHORT;
 
-                    boolean wrongPassword = false;
-
-                    if (firebaseError.getCode() == FirebaseError.INVALID_PASSWORD) {
-                        wrongPassword = true;
-                    }
-
-                    onAuthentication(false, wrongPassword);
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
             });
         }
