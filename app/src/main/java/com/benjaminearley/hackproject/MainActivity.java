@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.benjaminearley.hackproject.GeofenceCallbackService.GeofenceCallbackBinder;
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private ImageView profileImage;
     private Toolbar toolbar;
+
+    private ListView listView;
 
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -53,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         profileImage = (ImageView) findViewById(R.id.profile_icon);
 
+        listView = (ListView) findViewById(R.id.list);
+        listView.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -78,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onResume() {
         super.onResume();
+        String name = SharedPreferencesUtil.getLocation(this, "entered");
+        toolbar.setTitle(name);
+        if (!name.equals("Hack Chat")) {
+            listView.setVisibility(View.VISIBLE);
+        } else {
+            listView.setVisibility(View.INVISIBLE);
+        }
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -101,7 +114,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("entered")) {
-            toolbar.setTitle(sharedPreferences.getString("entered", "Hack Chat"));
+            String name = sharedPreferences.getString("entered", "Hack Chat");
+            toolbar.setTitle(name);
+            if (!name.equals("Hack Chat")) {
+                listView.setVisibility(View.VISIBLE);
+            } else {
+                listView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }

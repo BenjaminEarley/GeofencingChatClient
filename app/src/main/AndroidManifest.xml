@@ -75,6 +75,14 @@
             android:screenOrientation="portrait" />
 
         <service android:name=".GeofencePlaceTransitionsIntentService" />
+
+        <receiver
+            android:name=".util.LocationProviderChangedReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
