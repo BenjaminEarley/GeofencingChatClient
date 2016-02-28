@@ -60,7 +60,7 @@ public class SharedPreferencesUtil {
     public static void setAge(Context c, String age) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor spe = sp.edit();
-        spe.putString(c.getString(R.string.pref_age), "");
+        spe.putString(c.getString(R.string.pref_age), age);
         spe.apply();
     }
 
