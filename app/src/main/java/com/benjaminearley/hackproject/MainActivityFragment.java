@@ -93,7 +93,11 @@ public class MainActivityFragment extends Fragment {
                     view.findViewById(R.id.profile_icon_left).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             Intent intent = new Intent(getActivity(), ListProfileActivity.class);
+                            intent.putExtra("name", chatMessage.getFirstName() + " " + chatMessage.getLastName());
+                            intent.putExtra("age", chatMessage.getAge());
+                            intent.putExtra("gender", chatMessage.getGender());
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(

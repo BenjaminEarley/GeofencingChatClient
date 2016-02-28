@@ -23,21 +23,39 @@
         app:srcCompat="@drawable/ic_account_circle_white_256dp"
         tools:ignore="MissingPrefix" />
 
+    <TextView
+        android:id="@+id/name"
+        style="@android:style/TextAppearance.Material.Display1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="32dp"
+        android:textColor="@android:color/white">
+
+    </TextView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        android:paddingTop="32dp">
+        android:paddingTop="40dp">
 
+        <TextView
+            android:id="@+id/age"
+            style="@android:style/TextAppearance.Material.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp">
+        <TextView
+            android:id="@+id/gender"
+            style="@android:style/TextAppearance.Material.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white" />
 
 
     </LinearLayout>
