@@ -49,8 +49,12 @@ public class ListProfileActivityFragment extends Fragment {
         TextView ageTextView = (TextView) view.findViewById(R.id.age);
         TextView genderTextView = (TextView) view.findViewById(R.id.gender);
         nameTextView.setText(name);
-        ageTextView.setText("Age: " + age);
-        genderTextView.setText("Gender: " + gender);
+        if (age != null && !age.isEmpty()) {
+            ageTextView.setText("Age: " + age);
+        }
+        if (gender != null && !gender.isEmpty()) {
+            genderTextView.setText("Gender: " + gender);
+        }
 
         return view;
     }
