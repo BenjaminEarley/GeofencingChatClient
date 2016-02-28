@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +26,10 @@ public class RegisterActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mFirstNameView;
+    private EditText mLastNameView;
+    private EditText mAgeView;
+    private EditText mGenderView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -40,6 +43,10 @@ public class RegisterActivity extends AppCompatActivity {
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
+        mFirstNameView = (EditText) findViewById(R.id.firstName);
+        mLastNameView = (EditText) findViewById(R.id.lastName);
+        mAgeView = (EditText) findViewById(R.id.Age);
+        mGenderView = (EditText) findViewById(R.id.Gender);
 
         mLoginFormView = findViewById(R.id.register_form);
         mProgressView = findViewById(R.id.register_progress);
@@ -74,13 +81,45 @@ public class RegisterActivity extends AppCompatActivity {
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mFirstNameView.setError(null);
+        mLastNameView.setError(null);
+        mAgeView.setError(null);
+        mGenderView.setError(null);
 
         // Store values at the time of the login attempt.
         final String email = mEmailView.getText().toString();
         final String password = mPasswordView.getText().toString();
+        final String firstName = mFirstNameView.getText().toString();
+        final String lastName = mLastNameView.getText().toString();
+        final String age = mAgeView.getText().toString();
+        final String gender = mGenderView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
+
+        if (TextUtils.isEmpty(gender)) {
+            mGenderView.setError(getString(R.string.error_field_required));
+            focusView = mGenderView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(age)) {
+            mAgeView.setError(getString(R.string.error_field_required));
+            focusView = mAgeView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(lastName)) {
+            mLastNameView.setError(getString(R.string.error_field_required));
+            focusView = mLastNameView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(firstName)) {
+            mFirstNameView.setError(getString(R.string.error_field_required));
+            focusView = mFirstNameView;
+            cancel = true;
+        }
 
         if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
@@ -124,15 +163,10 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onAuthenticated(AuthData authData) {
                             SharedPreferencesUtil.setUserLogin(RegisterActivity.this, email, password);
 
-                            EditText firstNameText = (EditText) findViewById(R.id.firstName);
-                            EditText lastNameText = (EditText) findViewById(R.id.lastName);
-                            EditText ageText = (EditText) findViewById(R.id.Age);
-                            EditText genderText = (EditText) findViewById(R.id.Gender);
-
-                            SharedPreferencesUtil.setFirstName(RegisterActivity.this,firstNameText.getText().toString());
-                            SharedPreferencesUtil.setLastName(RegisterActivity.this,lastNameText.getText().toString());
-                            SharedPreferencesUtil.setAge(RegisterActivity.this,ageText.getText().toString());
-                            SharedPreferencesUtil.setGender(RegisterActivity.this,genderText.getText().toString());
+                            SharedPreferencesUtil.setFirstName(RegisterActivity.this, firstName);
+                            SharedPreferencesUtil.setLastName(RegisterActivity.this, lastName);
+                            SharedPreferencesUtil.setAge(RegisterActivity.this, age);
+                            SharedPreferencesUtil.setGender(RegisterActivity.this, gender);
 
                             onAuthentication(true, true);
                             finish();
