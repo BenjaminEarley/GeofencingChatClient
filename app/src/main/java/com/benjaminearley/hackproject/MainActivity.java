@@ -124,8 +124,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             toolbar.setTitle(name);
             if (!name.equals("Hack Chat")) {
                 listView.setVisibility(View.VISIBLE);
+                notAtView.setVisibility(View.GONE);
             } else {
                 listView.setVisibility(View.INVISIBLE);
+                notAtView.setVisibility(View.VISIBLE);
             }
         }
     }
