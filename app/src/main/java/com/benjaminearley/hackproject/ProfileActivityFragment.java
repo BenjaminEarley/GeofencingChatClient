@@ -1,14 +1,12 @@
 package com.benjaminearley.hackproject;
 
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.benjaminearley.hackproject.util.CameraPreview;
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 import com.benjaminearley.hackproject.util.Utils;
 import com.squareup.picasso.Picasso;
@@ -28,7 +25,6 @@ import static android.Manifest.permission.CAMERA;
  */
 public class ProfileActivityFragment extends Fragment {
 
-    private static final int REQUEST_CAMERA = 0;
     private EditText firstNameText;
     private EditText lastNameText;
     private EditText ageText;
@@ -38,24 +34,6 @@ public class ProfileActivityFragment extends Fragment {
 
 
     public ProfileActivityFragment() {
-    }
-
-    public static Camera getCameraInstance() {
-        int cameraCount = 0;
-        Camera cam = null;
-        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-        cameraCount = Camera.getNumberOfCameras();
-        for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
-            Camera.getCameraInfo(camIdx, cameraInfo);
-            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                try {
-                    cam = Camera.open(camIdx);
-                } catch (RuntimeException e) {
-                    Log.e("CAM", "Camera failed to open: " + e.getLocalizedMessage());
-                }
-            }
-        }
-        return cam;
     }
 
     @Override
@@ -74,22 +52,7 @@ public class ProfileActivityFragment extends Fragment {
         profile_image_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if ( mayCaptureFromCamera() ) {
-                    Camera mCamera;
-                    // Create an instance of Camera
-                    mCamera = getCameraInstance();
 
-                    // Create our Preview view and set it as the content of our activity.
-                    CameraPreview mPreview = new CameraPreview(getContext(), getActivity(), mCamera);
-                    FrameLayout preview = profile_image_button;
-                    preview.addView(mPreview);
-
-                }
-
-                Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-                    @Override
-                    public void onPictureTaken(byte[] data, Camera camera) {}
-                };
             }
         });
 
