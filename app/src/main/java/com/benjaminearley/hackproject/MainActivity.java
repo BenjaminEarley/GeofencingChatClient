@@ -4,10 +4,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -75,12 +73,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("email", SharedPreferencesUtil.getUserEmail(this));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    this, view, view.getTransitionName()).toBundle());
-        } else {
-            startActivity(intent);
-        }
+        startActivity(intent);
+
 
     }
 }
