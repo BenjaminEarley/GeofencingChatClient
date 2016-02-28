@@ -1,6 +1,9 @@
 package com.benjaminearley.hackproject;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,30 +61,46 @@ public class MainActivityFragment extends Fragment {
         mListAdapter = new FirebaseListAdapter<ChatMessage>(getActivity(), ChatMessage.class,
                 R.layout.chat_message, App.getFirebaseRef()) {
             @Override
-            protected void populateView(View view, final ChatMessage chatMessage, int i) {
+            protected void populateView(final View view, final ChatMessage chatMessage, int i) {
 
                 if (chatMessage.getUserUuid().equals(App.getFirebaseRef().getAuth().getUid())) {
 
                     view.findViewById(R.id.chat_right).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.chat_left).setVisibility(View.GONE);
 
                     ((TextView) view.findViewById(R.id.text1_right)).setText(chatMessage.getMessage());
 
                     view.findViewById(R.id.profile_icon_right).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), ProfileActivity.class);
 
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                        getActivity(), v, v.getTransitionName()).toBundle());
+                            } else {
+                                startActivity(intent);
+                            }
                         }
                     });
                 } else {
 
                     view.findViewById(R.id.chat_left).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.chat_right).setVisibility(View.GONE);
 
                     ((TextView) view.findViewById(R.id.text1_left)).setText(chatMessage.getMessage());
 
                     view.findViewById(R.id.profile_icon_left).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), ListProfileActivity.class);
 
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                        getActivity(), v, v.getTransitionName()).toBundle());
+                            } else {
+                                startActivity(intent);
+                            }
                         }
                     });
                 }
