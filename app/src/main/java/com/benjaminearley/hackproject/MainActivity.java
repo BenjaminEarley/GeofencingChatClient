@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 listView.setVisibility(View.VISIBLE);
                 notAtView.setVisibility(View.GONE);
             } else {
+                MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag("fragment");
+                fragment.onUpdate(sharedPreferences, key);
                 listView.setVisibility(View.INVISIBLE);
                 notAtView.setVisibility(View.VISIBLE);
             }

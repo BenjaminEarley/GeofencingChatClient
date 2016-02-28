@@ -18,8 +18,8 @@ public class App extends Application {
         return firebase;
     }
 
-    public static Firebase getMessagesRef() {
-        return getFirebaseRef().child("Messages");
+    public static Firebase getMessagesRef(String placeId) {
+        return getFirebaseRef().child("Messages").child(placeId);
     }
 
     public static Firebase getPlacesRef() {
