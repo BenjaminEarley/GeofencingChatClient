@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.benjaminearley.hackproject.models.ChatMessage;
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 import com.benjaminearley.hackproject.util.Utils;
 import com.firebase.ui.FirebaseListAdapter;
@@ -55,7 +56,7 @@ public class MainActivityFragment extends Fragment {
                 String text = textEdit.getText().toString();
                 if (!text.isEmpty()) {
                     chatMessage.setMessage(text);
-                    App.getFirebaseRef().push().setValue(chatMessage);
+                    App.getMessagesRef().push().setValue(chatMessage);
                     textEdit.setText("");
                     chatMessage.setMessage("");
                 }
@@ -63,11 +64,11 @@ public class MainActivityFragment extends Fragment {
         });
 
         mListAdapter = new FirebaseListAdapter<ChatMessage>(getActivity(), ChatMessage.class,
-                R.layout.chat_message, App.getFirebaseRef()) {
+                R.layout.chat_message, App.getMessagesRef()) {
             @Override
             protected void populateView(final View view, final ChatMessage chatMessage, int i) {
 
-                if (chatMessage.getUserUuid().equals(App.getFirebaseRef().getAuth().getUid())) {
+                if (chatMessage.getUserUuid().equals(App.getAuthUuid())) {
 
                     view.findViewById(R.id.chat_right).setVisibility(View.VISIBLE);
                     view.findViewById(R.id.chat_left).setVisibility(View.GONE);

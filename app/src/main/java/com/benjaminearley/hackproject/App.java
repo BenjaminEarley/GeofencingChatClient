@@ -18,6 +18,18 @@ public class App extends Application {
         return firebase;
     }
 
+    public static Firebase getMessagesRef() {
+        return getFirebaseRef().child("Messages");
+    }
+
+    public static Firebase getUsersRef() {
+        return getFirebaseRef().child("Users");
+    }
+
+    public static String getAuthUuid() {
+        return App.getFirebaseRef().getAuth().getUid();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

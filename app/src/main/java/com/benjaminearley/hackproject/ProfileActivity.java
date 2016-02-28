@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
                 break;
             case R.id.action_logout:
                 App.getFirebaseRef().unauth();
-                SharedPreferencesUtil.setisLogin(this, false);
+                SharedPreferencesUtil.clear(this);
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

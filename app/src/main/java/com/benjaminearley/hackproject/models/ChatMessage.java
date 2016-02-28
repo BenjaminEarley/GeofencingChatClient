@@ -1,4 +1,4 @@
-package com.benjaminearley.hackproject;
+package com.benjaminearley.hackproject.models;
 
 public class ChatMessage {
 
