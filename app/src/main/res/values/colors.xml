@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="lightGray">#FAFAFA</color>
+
+    <color name="bubbleGray">#EEe4e4e4</color>
+
+    <color name="messageDark">#616161</color>
+
 </resources>

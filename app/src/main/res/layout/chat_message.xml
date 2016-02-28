@@ -27,11 +27,21 @@
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/text1_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat_bubble_neutral"
+            android:gravity="center_vertical"
+            android:paddingBottom="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/messageDark" />
+
+        <android.support.v4.widget.Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -46,14 +56,25 @@
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:visibility="gone">
 
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/text1_right"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:background="@drawable/chat_bubble"
             android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            android:paddingBottom="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="6dp"
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            android:textColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/profile_icon_right"
