@@ -4,8 +4,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,12 +16,13 @@ import android.widget.ImageView;
 import com.benjaminearley.hackproject.GeofenceCallbackService.GeofenceCallbackBinder;
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     GeofenceCallbackService mService;
     boolean mBound = false;
 
     private ImageView profileImage;
+    private Toolbar toolbar;
 
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             GeofenceCallbackBinder binder = (GeofenceCallbackBinder) service;
             mService = binder.getService();
             mBound = true;
+            mService.start();
         }
 
         @Override
@@ -43,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Hack Chat");
         setSupportActionBar(toolbar);
 
         profileImage = (ImageView) findViewById(R.id.profile_icon);
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         // Bind to LocalService
         Intent intent = new Intent(this, GeofenceCallbackService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -63,9 +69,23 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         // Unbind from the service
         if (mBound) {
+            mService.stop();
             unbindService(mConnection);
             mBound = false;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+
     }
 
     public void onProfileIconClick(View view) {
@@ -76,5 +96,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("entered")) {
+            toolbar.setTitle(sharedPreferences.getString("entered", "Hack Chat"));
+        }
     }
 }

@@ -71,6 +71,26 @@ public class SharedPreferencesUtil {
         spe.apply();
     }
 
+    public static void onLocation(Context c, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putString("entered", name);
+        spe.apply();
+    }
+
+    public static String getLocation(Context c, String key) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        return sp.getString(key, "Hack Chat");
+    }
+
+    public static void setEnterLocation(Context c, String key, String name) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putString(key, name);
+        spe.apply();
+    }
+
+
     public static void setUserLogin(Context c, String email, String password) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor spe = sp.edit();

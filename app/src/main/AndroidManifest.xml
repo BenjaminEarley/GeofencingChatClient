@@ -73,6 +73,8 @@
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait" />
+
+        <service android:name=".GeofencePlaceTransitionsIntentService" />
     </application>
 
 </manifest>

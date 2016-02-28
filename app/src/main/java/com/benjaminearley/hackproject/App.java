@@ -22,6 +22,10 @@ public class App extends Application {
         return getFirebaseRef().child("Messages");
     }
 
+    public static Firebase getPlacesRef() {
+        return getFirebaseRef().child("Places");
+    }
+
     public static Firebase getUsersRef() {
         return getFirebaseRef().child("Users");
     }
