@@ -63,7 +63,11 @@ public class MainActivityFragment extends Fragment {
 
         final String name = SharedPreferencesUtil.getLocation(getActivity(), "entered");
         if (name.equals("Hack Chat")) {
-
+//                try {
+//                    ((FirebaseListAdapter) listView.getAdapter()).cleanup();
+//                } catch (Exception e) {
+//
+//                }
         } else {
             sendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,6 +147,7 @@ public class MainActivityFragment extends Fragment {
             };
 
             listView.setAdapter(mListAdapter);
+            ((FirebaseListAdapter) listView.getAdapter()).notifyDataSetChanged();
         }
 
         firstName = SharedPreferencesUtil.getFirstName(getActivity());
@@ -166,7 +171,11 @@ public class MainActivityFragment extends Fragment {
         if (key.equals("entered")) {
             final String name = sharedPreferences.getString("entered", "Hack Chat");
             if (name.equals("Hack Chat")) {
-
+//                try {
+//                    ((FirebaseListAdapter) listView.getAdapter()).cleanup();
+//                } catch (Exception e) {
+//
+//                }
             } else {
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -246,6 +255,7 @@ public class MainActivityFragment extends Fragment {
                 };
 
                 listView.setAdapter(mListAdapter);
+                ((FirebaseListAdapter) listView.getAdapter()).notifyDataSetChanged();
             }
         }
     }

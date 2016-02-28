@@ -42,11 +42,16 @@ public class GeofencePlaceTransitionsIntentService extends IntentService {
 
                 String name = SharedPreferencesUtil.getLocation(this, String.valueOf(placeId));
 
+                long time = System.currentTimeMillis();
 
-                if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+
+                if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+                    if (time - SharedPreferencesUtil.getTime(this) > 100) {
+                        SharedPreferencesUtil.onLocation(this, "Hack Chat");
+                    }
+                } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
                     SharedPreferencesUtil.onLocation(this, name);
-                } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-                    SharedPreferencesUtil.onLocation(this, "Hack Chat");
+                    SharedPreferencesUtil.setTime(this, time);
                 }
 
             }

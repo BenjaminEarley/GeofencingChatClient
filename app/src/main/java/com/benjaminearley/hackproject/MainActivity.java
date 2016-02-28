@@ -122,12 +122,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (key.equals("entered")) {
             String name = sharedPreferences.getString("entered", "Hack Chat");
             toolbar.setTitle(name);
+            MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag("fragment");
+            fragment.onUpdate(sharedPreferences, key);
             if (!name.equals("Hack Chat")) {
                 listView.setVisibility(View.VISIBLE);
                 notAtView.setVisibility(View.GONE);
             } else {
-                MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag("fragment");
-                fragment.onUpdate(sharedPreferences, key);
                 listView.setVisibility(View.INVISIBLE);
                 notAtView.setVisibility(View.VISIBLE);
             }

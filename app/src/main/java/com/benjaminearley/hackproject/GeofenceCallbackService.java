@@ -128,7 +128,7 @@ public class GeofenceCallbackService extends Service implements GoogleApiClient.
 
         mLocationRequest.setInterval(2000L);
 
-        mLocationRequest.setFastestInterval(500L);
+        mLocationRequest.setFastestInterval(1L);
 
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 

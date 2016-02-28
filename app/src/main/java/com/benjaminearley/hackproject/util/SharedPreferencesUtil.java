@@ -90,6 +90,18 @@ public class SharedPreferencesUtil {
         spe.apply();
     }
 
+    public static void setTime(Context c, Long time) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putLong("time", time);
+        spe.apply();
+    }
+
+    public static Long getTime(Context c) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        return sp.getLong("time", 1000000000L);
+    }
+
 
     public static void setUserLogin(Context c, String email, String password) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
