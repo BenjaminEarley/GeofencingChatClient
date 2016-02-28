@@ -33,4 +33,6 @@
 
     <string name="send">Send</string>
     <string name="title_activity_list_profile">ListProfileActivity</string>
+    <string name="action_register_short">Register</string>
+    <string name="title_activity_register">Register</string>
 </resources>
