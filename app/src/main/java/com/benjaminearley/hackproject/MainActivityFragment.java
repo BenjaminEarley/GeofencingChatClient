@@ -56,13 +56,41 @@ public class MainActivityFragment extends Fragment {
         });
 
         mListAdapter = new FirebaseListAdapter<ChatMessage>(getActivity(), ChatMessage.class,
-                android.R.layout.simple_list_item_1, App.getFirebaseRef()) {
+                R.layout.chat_message, App.getFirebaseRef()) {
             @Override
-            protected void populateView(View view, ChatMessage chatMessage, int i) {
-                ((TextView) view.findViewById(android.R.id.text1)).setText(chatMessage.getMessage());
+            protected void populateView(View view, final ChatMessage chatMessage, int i) {
+
+                if (chatMessage.getUserUuid().equals(App.getFirebaseRef().getAuth().getUid())) {
+
+                    view.findViewById(R.id.chat_right).setVisibility(View.VISIBLE);
+
+                    ((TextView) view.findViewById(R.id.text1_right)).setText(chatMessage.getMessage());
+
+                    view.findViewById(R.id.profile_icon_right).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                } else {
+
+                    view.findViewById(R.id.chat_left).setVisibility(View.VISIBLE);
+
+                    ((TextView) view.findViewById(R.id.text1_right)).setText(chatMessage.getMessage());
+
+                    view.findViewById(R.id.profile_icon_right).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                }
+
             }
 
         };
+
+        listView.setDivider(null);
 
         listView.setAdapter(mListAdapter);
 
@@ -79,6 +107,7 @@ public class MainActivityFragment extends Fragment {
         gender = SharedPreferencesUtil.getGender(getActivity());
 
         chatMessage = new ChatMessage("", firstName, lastName, age, gender, "");
+        chatMessage.setUserUuid(App.getFirebaseRef().getAuth().getUid());
 
 
     }

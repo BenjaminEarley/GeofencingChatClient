@@ -7,6 +7,7 @@ public class ChatMessage {
     private String lastName;
     private String age;
     private String gender;
+    private String userUuid;
     private String message;
 
     public ChatMessage() {
@@ -73,6 +74,14 @@ public class ChatMessage {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getUserUuid() {
+        return userUuid;
+    }
+
+    public void setUserUuid(String userUuid) {
+        this.userUuid = userUuid;
     }
 
 }
