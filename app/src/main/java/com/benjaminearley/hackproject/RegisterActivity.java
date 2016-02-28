@@ -2,7 +2,6 @@ package com.benjaminearley.hackproject;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -19,8 +18,6 @@ import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-
-import static android.widget.Toast.makeText;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -105,6 +102,17 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onAuthenticated(AuthData authData) {
                             SharedPreferencesUtil.setUserLogin(RegisterActivity.this, email, password);
+
+                            EditText firstNameText = (EditText) findViewById(R.id.firstName);
+                            EditText lastNameText = (EditText) findViewById(R.id.lastName);
+                            EditText ageText = (EditText) findViewById(R.id.Age);
+                            EditText genderText = (EditText) findViewById(R.id.Gender);
+
+                            SharedPreferencesUtil.setFirstName(RegisterActivity.this,firstNameText.getText().toString());
+                            SharedPreferencesUtil.setLastName(RegisterActivity.this,lastNameText.getText().toString());
+                            SharedPreferencesUtil.setAge(RegisterActivity.this,ageText.getText().toString());
+                            SharedPreferencesUtil.setGender(RegisterActivity.this,genderText.getText().toString());
+
                             onAuthentication(true, true);
                         }
 
