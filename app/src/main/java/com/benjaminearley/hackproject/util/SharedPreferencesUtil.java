@@ -90,6 +90,18 @@ public class SharedPreferencesUtil {
         spe.apply();
     }
 
+    public static void setlast(Context c, String last) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putString("last", last);
+        spe.apply();
+    }
+
+    public static String getlast(Context c) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        return sp.getString("last", "nope");
+    }
+
     public static void setTime(Context c, Long time) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor spe = sp.edit();

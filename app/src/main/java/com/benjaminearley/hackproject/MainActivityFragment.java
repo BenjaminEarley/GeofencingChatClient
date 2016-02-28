@@ -39,6 +39,8 @@ public class MainActivityFragment extends Fragment {
     private String gender;
     private String email;
 
+    private String name;
+
     public MainActivityFragment() {
     }
 
@@ -61,7 +63,7 @@ public class MainActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        final String name = SharedPreferencesUtil.getLocation(getActivity(), "entered");
+        name = SharedPreferencesUtil.getLocation(getActivity(), "entered");
         if (name.equals("Hack Chat")) {
 //                try {
 //                    ((FirebaseListAdapter) listView.getAdapter()).cleanup();
@@ -69,85 +71,87 @@ public class MainActivityFragment extends Fragment {
 //
 //                }
         } else {
-            sendButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String text = textEdit.getText().toString();
-                    if (!text.isEmpty()) {
-                        chatMessage.setMessage(text);
-                        App.getMessagesRef(name).push().setValue(chatMessage);
-                        textEdit.setText("");
-                        chatMessage.setMessage("");
+            if (SharedPreferencesUtil.getlast(getActivity()).equals("name")) {
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String text = textEdit.getText().toString();
+                        if (!text.isEmpty()) {
+                            chatMessage.setMessage(text);
+                            App.getMessagesRef(name).push().setValue(chatMessage);
+                            textEdit.setText("");
+                            chatMessage.setMessage("");
+                        }
                     }
-                }
-            });
+                });
 
-            mListAdapter = new FirebaseListAdapter<ChatMessage>(getActivity(), ChatMessage.class,
-                    R.layout.chat_message, App.getMessagesRef(name)) {
-                @Override
-                protected void populateView(final View view, final ChatMessage chatMessage, int i) {
+                mListAdapter = new FirebaseListAdapter<ChatMessage>(getActivity(), ChatMessage.class,
+                        R.layout.chat_message, App.getMessagesRef(name)) {
+                    @Override
+                    protected void populateView(final View view, final ChatMessage chatMessage, int i) {
 
-                    if (chatMessage.getUserUuid().equals(App.getAuthUuid())) {
+                        if (chatMessage.getUserUuid().equals(App.getAuthUuid())) {
 
-                        view.findViewById(R.id.chat_right).setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.chat_left).setVisibility(View.GONE);
+                            view.findViewById(R.id.chat_right).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.chat_left).setVisibility(View.GONE);
 
-                        ImageView imageView = (ImageView) view.findViewById(R.id.profile_icon_right);
+                            ImageView imageView = (ImageView) view.findViewById(R.id.profile_icon_right);
 
-                        Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(chatMessage.getEmail()) + "?&d=identicon").into(imageView);
+                            Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(chatMessage.getEmail()) + "?&d=identicon").into(imageView);
 
-                        ((TextView) view.findViewById(R.id.text1_right)).setText(chatMessage.getMessage());
+                            ((TextView) view.findViewById(R.id.text1_right)).setText(chatMessage.getMessage());
 
-                        view.findViewById(R.id.profile_icon_right).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                                intent.putExtra("email", chatMessage.getEmail());
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                            getActivity(), v, v.getTransitionName()).toBundle());
-                                } else {
-                                    startActivity(intent);
+                            view.findViewById(R.id.profile_icon_right).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                                    intent.putExtra("email", chatMessage.getEmail());
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                                getActivity(), v, v.getTransitionName()).toBundle());
+                                    } else {
+                                        startActivity(intent);
+                                    }
                                 }
-                            }
-                        });
-                    } else {
+                            });
+                        } else {
 
-                        view.findViewById(R.id.chat_left).setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.chat_right).setVisibility(View.GONE);
+                            view.findViewById(R.id.chat_left).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.chat_right).setVisibility(View.GONE);
 
-                        ((TextView) view.findViewById(R.id.text1_left)).setText(chatMessage.getMessage());
+                            ((TextView) view.findViewById(R.id.text1_left)).setText(chatMessage.getMessage());
 
-                        ImageView imageView = (ImageView) view.findViewById(R.id.profile_icon_left);
+                            ImageView imageView = (ImageView) view.findViewById(R.id.profile_icon_left);
 
-                        Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(chatMessage.getEmail()) + "?&d=identicon").into(imageView);
+                            Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(chatMessage.getEmail()) + "?&d=identicon").into(imageView);
 
-                        view.findViewById(R.id.profile_icon_left).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                            view.findViewById(R.id.profile_icon_left).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 
-                                Intent intent = new Intent(getActivity(), ListProfileActivity.class);
-                                intent.putExtra("name", chatMessage.getFirstName() + " " + chatMessage.getLastName());
-                                intent.putExtra("age", chatMessage.getAge());
-                                intent.putExtra("gender", chatMessage.getGender());
-                                intent.putExtra("email", chatMessage.getEmail());
+                                    Intent intent = new Intent(getActivity(), ListProfileActivity.class);
+                                    intent.putExtra("name", chatMessage.getFirstName() + " " + chatMessage.getLastName());
+                                    intent.putExtra("age", chatMessage.getAge());
+                                    intent.putExtra("gender", chatMessage.getGender());
+                                    intent.putExtra("email", chatMessage.getEmail());
 
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                            getActivity(), v, v.getTransitionName()).toBundle());
-                                } else {
-                                    startActivity(intent);
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                                getActivity(), v, v.getTransitionName()).toBundle());
+                                    } else {
+                                        startActivity(intent);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+
                     }
 
-                }
 
-            };
+                };
 
-            listView.setAdapter(mListAdapter);
-            ((FirebaseListAdapter) listView.getAdapter()).notifyDataSetChanged();
+                listView.setAdapter(mListAdapter);
+            }
         }
 
         firstName = SharedPreferencesUtil.getFirstName(getActivity());
@@ -164,6 +168,13 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        SharedPreferencesUtil.setlast(getActivity(), name);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferencesUtil.setlast(getActivity(), "die");
     }
 
 
@@ -255,7 +266,6 @@ public class MainActivityFragment extends Fragment {
                 };
 
                 listView.setAdapter(mListAdapter);
-                ((FirebaseListAdapter) listView.getAdapter()).notifyDataSetChanged();
             }
         }
     }
