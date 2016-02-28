@@ -15,16 +15,16 @@
 
     <FrameLayout
         android:id="@+id/profile_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
         android:layout_gravity="center_horizontal"
         android:transitionName="profile">
-        <ImageView
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            app:srcCompat="@drawable/ic_account_circle_white_256dp"
-            tools:ignore="MissingPrefix"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </FrameLayout>
 
 

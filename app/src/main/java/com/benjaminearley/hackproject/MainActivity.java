@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.benjaminearley.hackproject.GeofenceCallbackService.GeofenceCallbackBinder;
+import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public void onProfileIconClick(View view) {
 
         Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("email", SharedPreferencesUtil.getUserEmail(this));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(

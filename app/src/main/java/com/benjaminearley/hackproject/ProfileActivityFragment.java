@@ -14,9 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
-import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 import com.benjaminearley.hackproject.util.CameraPreview;
+import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
+import com.benjaminearley.hackproject.util.Utils;
+import com.squareup.picasso.Picasso;
 
 import static android.Manifest.permission.CAMERA;
 
@@ -31,8 +34,28 @@ public class ProfileActivityFragment extends Fragment {
     private EditText ageText;
     private EditText genderText;
 
+    private ImageView imageView;
+
 
     public ProfileActivityFragment() {
+    }
+
+    public static Camera getCameraInstance() {
+        int cameraCount = 0;
+        Camera cam = null;
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        cameraCount = Camera.getNumberOfCameras();
+        for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
+            Camera.getCameraInfo(camIdx, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                try {
+                    cam = Camera.open(camIdx);
+                } catch (RuntimeException e) {
+                    Log.e("CAM", "Camera failed to open: " + e.getLocalizedMessage());
+                }
+            }
+        }
+        return cam;
     }
 
     @Override
@@ -58,7 +81,7 @@ public class ProfileActivityFragment extends Fragment {
 
                     // Create our Preview view and set it as the content of our activity.
                     CameraPreview mPreview = new CameraPreview(getContext(), getActivity(), mCamera);
-                    FrameLayout preview = (FrameLayout) profile_image_button;
+                    FrameLayout preview = profile_image_button;
                     preview.addView(mPreview);
 
                 }
@@ -75,11 +98,15 @@ public class ProfileActivityFragment extends Fragment {
         lastNameText = (EditText) view.findViewById(R.id.lastName);
         ageText = (EditText) view.findViewById(R.id.Age);
         genderText = (EditText) view.findViewById(R.id.Gender);
+        imageView = (ImageView) view.findViewById(R.id.profile_image);
 
         firstNameText.setText(SharedPreferencesUtil.getFirstName(getActivity()));
         lastNameText.setText(SharedPreferencesUtil.getLastName(getActivity()));
         ageText.setText(SharedPreferencesUtil.getAge(getActivity()));
         genderText.setText(SharedPreferencesUtil.getGender(getActivity()));
+
+        Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(getActivity().getIntent().getStringExtra("email")) + "?d=identicon&size=1024").into(imageView);
+
 
         firstNameText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -165,23 +192,5 @@ public class ProfileActivityFragment extends Fragment {
             requestPermissions(new String[]{CAMERA}, REQUEST_CAMERA);
         }
         return false;
-    }
-
-    public static Camera getCameraInstance(){
-        int cameraCount = 0;
-        Camera cam = null;
-        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-        cameraCount = Camera.getNumberOfCameras();
-        for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
-            Camera.getCameraInfo(camIdx, cameraInfo);
-            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                try {
-                    cam = Camera.open(camIdx);
-                } catch (RuntimeException e) {
-                    Log.e("CAM", "Camera failed to open: " + e.getLocalizedMessage());
-                }
-            }
-        }
-        return cam;
     }
 }

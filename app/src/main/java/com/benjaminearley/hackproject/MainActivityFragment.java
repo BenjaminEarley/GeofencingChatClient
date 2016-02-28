@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
+import com.benjaminearley.hackproject.util.Utils;
 import com.firebase.ui.FirebaseListAdapter;
+import com.squareup.picasso.Picasso;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -32,6 +35,7 @@ public class MainActivityFragment extends Fragment {
     private String lastName;
     private String age;
     private String gender;
+    private String email;
 
     public MainActivityFragment() {
     }
@@ -68,13 +72,17 @@ public class MainActivityFragment extends Fragment {
                     view.findViewById(R.id.chat_right).setVisibility(View.VISIBLE);
                     view.findViewById(R.id.chat_left).setVisibility(View.GONE);
 
+                    ImageView imageView = (ImageView) view.findViewById(R.id.profile_icon_right);
+
+                    Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(chatMessage.getEmail()) + "?&d=identicon").into(imageView);
+
                     ((TextView) view.findViewById(R.id.text1_right)).setText(chatMessage.getMessage());
 
                     view.findViewById(R.id.profile_icon_right).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ProfileActivity.class);
-
+                            intent.putExtra("email", chatMessage.getEmail());
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
                                         getActivity(), v, v.getTransitionName()).toBundle());
@@ -90,6 +98,10 @@ public class MainActivityFragment extends Fragment {
 
                     ((TextView) view.findViewById(R.id.text1_left)).setText(chatMessage.getMessage());
 
+                    ImageView imageView = (ImageView) view.findViewById(R.id.profile_icon_left);
+
+                    Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(chatMessage.getEmail()) + "?&d=identicon").into(imageView);
+
                     view.findViewById(R.id.profile_icon_left).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -98,6 +110,7 @@ public class MainActivityFragment extends Fragment {
                             intent.putExtra("name", chatMessage.getFirstName() + " " + chatMessage.getLastName());
                             intent.putExtra("age", chatMessage.getAge());
                             intent.putExtra("gender", chatMessage.getGender());
+                            intent.putExtra("email", chatMessage.getEmail());
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -128,8 +141,9 @@ public class MainActivityFragment extends Fragment {
         lastName = SharedPreferencesUtil.getLastName(getActivity());
         age = SharedPreferencesUtil.getAge(getActivity());
         gender = SharedPreferencesUtil.getGender(getActivity());
+        email = SharedPreferencesUtil.getUserEmail(getActivity());
 
-        chatMessage = new ChatMessage("", firstName, lastName, age, gender, "");
+        chatMessage = new ChatMessage("", firstName, lastName, age, gender, "", email);
         chatMessage.setUserUuid(App.getFirebaseRef().getAuth().getUid());
 
 

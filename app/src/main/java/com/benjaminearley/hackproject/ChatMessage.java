@@ -3,6 +3,7 @@ package com.benjaminearley.hackproject;
 public class ChatMessage {
 
     private String imageUrl;
+    private String email;
     private String firstName;
     private String lastName;
     private String age;
@@ -19,13 +20,14 @@ public class ChatMessage {
         this.message = message;
     }
 
-    public ChatMessage(String imageUrl, String firstName, String lastName, String age, String gender, String message) {
+    public ChatMessage(String imageUrl, String firstName, String lastName, String age, String gender, String message, String email) {
         this.imageUrl = imageUrl;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
         this.message = message;
+        this.email = email;
     }
 
     public String getImageUrl() {
@@ -83,5 +85,15 @@ public class ChatMessage {
     public void setUserUuid(String userUuid) {
         this.userUuid = userUuid;
     }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
 }

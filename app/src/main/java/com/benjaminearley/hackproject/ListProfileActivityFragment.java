@@ -9,7 +9,11 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.benjaminearley.hackproject.util.Utils;
+import com.squareup.picasso.Picasso;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,6 +48,10 @@ public class ListProfileActivityFragment extends Fragment {
             getActivity().getWindow().setSharedElementEnterTransition(TransitionInflater.from(getActivity())
                     .inflateTransition(R.transition.curve));
         }
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.profile_image);
+
+        Picasso.with(getActivity()).load("http://www.gravatar.com/avatar/" + Utils.md5(getActivity().getIntent().getStringExtra("email")) + "?d=identicon&size=1024").into(imageView);
 
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView ageTextView = (TextView) view.findViewById(R.id.age);
