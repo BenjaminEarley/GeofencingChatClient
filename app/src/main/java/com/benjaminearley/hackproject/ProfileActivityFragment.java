@@ -9,15 +9,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.TransitionInflater;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.Spinner;
 
 import com.benjaminearley.hackproject.util.SharedPreferencesUtil;
 import com.benjaminearley.hackproject.util.CameraPreview;
@@ -33,7 +29,7 @@ public class ProfileActivityFragment extends Fragment {
     private EditText firstNameText;
     private EditText lastNameText;
     private EditText ageText;
-    private Spinner genderSpinner;
+    private EditText genderText;
 
 
     public ProfileActivityFragment() {
@@ -78,24 +74,12 @@ public class ProfileActivityFragment extends Fragment {
         firstNameText = (EditText) view.findViewById(R.id.firstName);
         lastNameText = (EditText) view.findViewById(R.id.lastName);
         ageText = (EditText) view.findViewById(R.id.Age);
-        genderSpinner = (Spinner) view.findViewById(R.id.Gender);
-
-
-        String[] items = new String[]{"Unknown", "Male", "Female"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
-        genderSpinner.setAdapter(adapter);
+        genderText = (EditText) view.findViewById(R.id.Gender);
 
         firstNameText.setText(SharedPreferencesUtil.getFirstName(getActivity()));
         lastNameText.setText(SharedPreferencesUtil.getLastName(getActivity()));
         ageText.setText(SharedPreferencesUtil.getAge(getActivity()));
-        String gender = SharedPreferencesUtil.getGender(getActivity());
-        if ( gender == "Male" ) {
-            genderSpinner.setSelection(1);
-        } else if ( gender == "Female" ) {
-            genderSpinner.setSelection(2);
-        } else {
-            genderSpinner.setSelection(0);
-        }
+        genderText.setText(SharedPreferencesUtil.getGender(getActivity()));
 
         firstNameText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -148,17 +132,20 @@ public class ProfileActivityFragment extends Fragment {
             }
         });
 
-        genderSpinner.setOnKeyListener(new View.OnKeyListener() {
+        genderText.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ( keyCode == 0 ) {
-                    SharedPreferencesUtil.setGender(getActivity(), "Unknown");
-                } else if ( keyCode == 1 ) {
-                    SharedPreferencesUtil.setGender(getActivity(), "Male");
-                } else if ( keyCode == 2 ) {
-                    SharedPreferencesUtil.setGender(getActivity(), "Female");
-                }
-                return false;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                SharedPreferencesUtil.setGender(getActivity(), s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
