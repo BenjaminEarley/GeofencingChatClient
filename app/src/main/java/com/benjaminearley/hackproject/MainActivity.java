@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private ListView listView;
 
+    private View notAtView;
+
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         listView = (ListView) findViewById(R.id.list);
         listView.setVisibility(View.INVISIBLE);
+        notAtView = findViewById(R.id.notAtLocation);
+        notAtView.setVisibility(View.VISIBLE);
 
     }
 
@@ -88,8 +92,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         toolbar.setTitle(name);
         if (!name.equals("Hack Chat")) {
             listView.setVisibility(View.VISIBLE);
+            notAtView.setVisibility(View.GONE);
         } else {
             listView.setVisibility(View.INVISIBLE);
+            notAtView.setVisibility(View.VISIBLE);
         }
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }

@@ -8,6 +8,8 @@
 
     <color name="bubbleGray">#EEe4e4e4</color>
 
+    <color name="notHere">#BDBDBD</color>
+
     <color name="messageDark">#616161</color>
 
 </resources>
